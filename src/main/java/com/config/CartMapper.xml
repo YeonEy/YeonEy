@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CartMapper">
+	<insert id="cartInsert" parameterType="cartDTO">
+		insert into cart(num, userid, gCode, gName, gPrice, gSize, gColor, gAmount, gImage)
+			values (CART_SEQ.NEXTVAL, #{userid}, #{gCode}, #{gName}, #{gPrice}, #{gSize}, #{gColor}, #{gAmount}, #{gImage})
+	</insert>
+	<select id="CartList" parameterType="string" resultType="cartDTO">
+		select * from cart where USERID = #{userid}
+	</select>
+	<delete id="cartDel" parameterType="string">
+		delete from cart where num = #{cartNum}
+	</delete>
+	<update id="cartListUpdate" parameterType="map">
+		update cart set gAmount = #{amount} where num = #{num}
+	</update>
+	<delete id="CartDeleteAll" parameterType="list">
+		delete from cart where num in 
+		<foreach collection="list" item="x" open="(" separator="," close=")">
+			#{x}
+		</foreach>
+	</delete>
+	<select id="cartbyNum" parameterType="string" resultType="cartDTO">
+		select * from cart where num = #{num}
+	</select>
+	<insert id="orderDone" parameterType="OrderDTO">
+		insert into ORDERINFO (num, userid, gCode, gName, gPrice, gSize, gColor, gAmount, 
+					gImage, orderName, post, addr1, addr2, phone, payMethod, ORDERDAY) 
+			values (orderInfo_seq.nextval, #{userid}, #{gCode}, #{gName}, #{gPrice}, #{gSize}, #{gColor},
+					#{gAmount}, #{gImage}, #{orderName}, #{post}, #{addr1}, #{addr2}, #{phone}, #{payMethod}, sysdate)
+	</insert>
+</mapper> 

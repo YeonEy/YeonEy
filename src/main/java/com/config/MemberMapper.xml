@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberMapper">
+	<insert id="memberInsert" parameterType="MemberDTO">
+		insert into member(userid, passwd, username, post, addr1, addr2, phone1, phone2, phone3, email1, email2) 
+				values(#{userid},#{passwd},#{username},#{post},#{addr1},#{addr2},#{phone1},#{phone2},#{phone3},#{email1},#{email2})
+	</insert>
+	<select id="idCheck" parameterType="string" resultType="int">
+		select count(*) from member where USERID = #{userid}
+	</select>
+	<select id="selectMember" parameterType="map" resultType="memberDTO">
+		select * from member where userid = #{userid} and passwd = #{passwd}
+	</select>
+	<select id="mypage" parameterType="string" resultType="memberDTO">
+		select * from member where userid = #{userid}
+	</select>
+	<update id="memberUpdate" parameterType="memberDTO">
+		update member set addr1 = #{addr1}, addr2 = #{addr2}, post = #{post}, phone1 = #{phone1}, phone2 = #{phone2}, phone3 = #{phone3},
+			email1 = #{email1},  email2 = #{email2} where userid = #{userid}
+	</update>
+</mapper>
